@@ -26,6 +26,24 @@ class AccountsController {
 
     response.json(account);
   }
+
+
+  async credit(request, response) {
+    const { id, value } = request.params;
+
+    const account = await AccountsRepository.findById(id);
+
+    if (!account) {
+      return response.status(404).json({ error: 'Account not found' });
+    }
+    if (!value) {
+      return response.status(404).json({ error: 'Null value' });
+    }
+
+    const aaa = await AccountsRepository.credit(id, value);
+
+    response.status(200);
+  }
 }
 
 module.exports = new AccountsController();

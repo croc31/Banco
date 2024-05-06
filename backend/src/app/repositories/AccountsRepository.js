@@ -16,6 +16,7 @@ class AccountsRepository {
 
     return row;
   }
+
 }
 
 module.exports = new AccountsRepository();
