@@ -1,6 +1,20 @@
 const AccountsRepository = require('../repositories/AccountsRepository');
 
 class AccountsController {
+  async show(request, response) {
+    const { id } = request.params;
+
+    const account = await AccountsRepository.findById(id);
+
+    console.log({ account });
+
+    if (!account) {
+      return response.status(404).json({ error: 'Account not found' });
+    }
+
+    response.json(account);
+  }
+
   async store(request, response) {
     const { id } = request.body;
 
