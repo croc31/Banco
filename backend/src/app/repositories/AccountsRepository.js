@@ -17,8 +17,8 @@ class AccountsRepository {
     return row;
   }
   async credit(id, value) {
-    const [oldValue] = await db.query('select value FROM accounts WHERE id = $1', [id]);
-    const [row] = await db.query('UPDATE accounts SET value = $2 WHERE id = $1', [id][value-oldValue[0]]);
+    const [oldValue] = await db.query('select balance FROM accounts WHERE id = $1', [id]);
+    const [row] = await db.query('UPDATE accounts SET balance = $2 WHERE id = $1', [id][value-oldValue[0]]);
 
     console.log({ row });
 
