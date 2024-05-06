@@ -1,0 +1,17 @@
+meta {
+  name: Show Account Balance
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:3333/accounts/1234
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1234
+  }
+}
