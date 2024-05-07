@@ -27,7 +27,7 @@ class AccountsController {
     response.json(account);
   }
 
-  async debit(request, response) {
+  async credit(request, response) {
     const { id, value } = request.params;
 
     const account = await AccountsRepository.findById(id);

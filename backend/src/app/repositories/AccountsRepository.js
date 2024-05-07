@@ -17,7 +17,7 @@ class AccountsRepository {
     return row;
   }
 
-  async debit(id, value) {
+  async credit(id, value) {
     const [oldValue] = await db.query('select balance FROM accounts WHERE id = $1', [id]);
     const [row] = await db.query('UPDATE accounts SET balance = $2 WHERE id = $1', [id][value+oldValue[0]]);
 
