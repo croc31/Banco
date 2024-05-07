@@ -39,9 +39,9 @@ class AccountsController {
       return response.status(404).json({ error: 'Null value' });
     }
 
-    const aaa = await AccountsRepository.debit(id, value);
+    const currentAccount = await AccountsRepository.debit(id, value);
 
-    response.status(200);
+    response.json(currentAccount);
   }
 }
 
