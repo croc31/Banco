@@ -30,6 +30,16 @@ export function App() {
     } catch (error) {
       console.log({ error })
     }
+  }, [id]);
+
+  const handleCheckAccountBalance = useCallback(async () => {
+    try {
+      const { data } = await api.get(`accounts/${id}`);
+
+      setResult(data);
+    } catch (error) {
+      console.log({ error })
+    }
   }, [id])
 
   return (
@@ -54,6 +64,29 @@ export function App() {
             </CardContent>
             <CardFooter className="flex">
               <Button type="submit">Criar</Button>
+            </CardFooter>
+          </form>
+        </Card>
+
+        <Card className="w-[350px]">
+          <form onSubmit={event => {
+            handleCheckAccountBalance();
+            event.preventDefault();
+          }}>
+            <CardHeader>
+              <CardTitle>Consultar saldo</CardTitle>
+              <CardDescription>Digite o número da sua conta</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid w-full items-center gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="id">Número da conta</Label>
+                  <Input id="id" placeholder="12345" value={id} onChange={(event) => setId(event.target.value)} />
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="flex">
+              <Button type="submit">Consultar</Button>
             </CardFooter>
           </form>
         </Card>
