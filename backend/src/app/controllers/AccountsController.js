@@ -61,6 +61,24 @@ class AccountsController {
 
     response.json(currentAccount);
   }
+
+  async transaction(request, response) {
+    const { idDebit, idCredit, value } = request.body;
+
+    const accountDebit = await AccountsRepository.findById(idDebit);
+    const accountCredit = await AccountsRepository.findById(idCredit);
+
+    if (!accountDebit || !accountCredit) {
+      return response.status(404).json({ error: 'Account not found' });
+    }
+    if (!value) {
+      return response.status(404).json({ error: 'Null value' });
+    }
+
+    const currentAccount = await AccountsRepository.transaction(idDebit, idCredit, value);
+
+    response.json(currentAccount);
+  }
 }
 
 module.exports = new AccountsController();

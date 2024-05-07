@@ -31,6 +31,14 @@ class AccountsRepository {
 
     return row;
   }
+
+  async transaction(idDebit, idCredit, value) {
+    debit(idDebit, value);
+    row = credit(idCredit, value);
+    console.log({ row });
+
+    return row;
+  }
 }
 
 module.exports = new AccountsRepository();
