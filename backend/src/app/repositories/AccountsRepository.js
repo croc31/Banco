@@ -16,6 +16,15 @@ class AccountsRepository {
 
     return row;
   }
+
+  async credit(id, value) {
+    const [oldValue] = await db.query('SELECT balance FROM accounts WHERE id = $1', [id]);
+    const [row] = await db.query('UPDATE accounts SET balance = $2 WHERE id = $1', [id, value + oldValue]);
+    
+    console.log({ row });
+
+    return row;
+  }
 }
 
 module.exports = new AccountsRepository();
