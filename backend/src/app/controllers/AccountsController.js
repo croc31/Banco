@@ -28,7 +28,7 @@ class AccountsController {
   }
 
   async credit(request, response) {
-    const { id, value } = request.params;
+    const { id, value } = request.body;
 
     const account = await AccountsRepository.findById(id);
 
