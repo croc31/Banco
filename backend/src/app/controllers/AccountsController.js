@@ -40,9 +40,9 @@ class AccountsController {
       return response.status(404).json({ error: 'Null value' });
     }
 
-    const aaa = await AccountsRepository.credit(id, value);
+    const currentAccount = await AccountsRepository.credit(id, value);
 
-    response.status(200);
+    response.json(currentAccount);
   }
 }
 
