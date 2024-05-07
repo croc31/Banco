@@ -65,6 +65,16 @@ export function App() {
     }
   }, [id])
 
+  const handleDebit = useCallback(async () => {
+    try {
+      const { data } = await api.get('debit',{ idDebit, value});
+
+      setResult(data);
+    } catch (error) {
+      console.log({ error })
+    }
+  }, [id])
+
   return (
     <main>
       <div className="flex p-16 gap-4">
@@ -163,6 +173,36 @@ export function App() {
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="idCredit">Número da conta</Label>
                   <Input id="idCredit" placeholder="12345" value={idCredit} onChange={(event) => setidCredit(event.target.value)} />
+                </div>
+              </div>
+              
+              <div className="grid w-full items-center gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="value">Número da conta</Label>
+                  <Input id="value" placeholder="12.11" value={value} onChange={(event) => setValue(event.target.value)} />
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="flex">
+              <Button type="submit">Consultar</Button>
+            </CardFooter>
+          </form>
+        </Card>
+
+        <Card className="w-[350px]">
+          <form onSubmit={event => {
+            handleDebit();
+            event.preventDefault();
+          }}>
+            <CardHeader>
+              <CardTitle>Débito</CardTitle>
+              <CardDescription>Digite o número da conta de onde será feito débito e o valor</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid w-full items-center gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="idDebit">Número da conta</Label>
+                  <Input id="idDebit" placeholder="12345" value={idDebit} onChange={(event) => setidDebit(event.target.value)} />
                 </div>
               </div>
               
