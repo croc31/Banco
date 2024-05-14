@@ -39,6 +39,10 @@ class AccountsController {
     if (!value) {
       return response.status(404).json({ error: 'Null value' });
     }
+    if (account.balance<value) {
+      return response.status(400).json({ error: 'Saldo insuficiente!' });
+    }
+    
 
     const currentAccount = await AccountsRepository.debit(id, value);
 
@@ -56,6 +60,7 @@ class AccountsController {
     if (!value) {
       return response.status(404).json({ error: 'Null value' });
     }
+    
 
     const currentAccount = await AccountsRepository.credit(id, value);
 
@@ -73,6 +78,9 @@ class AccountsController {
     }
     if (!value) {
       return response.status(404).json({ error: 'Null value' });
+    }
+    if (accountDebit.balance<value) {
+      return response.status(400).json({ error: 'Saldo insuficiente!' });
     }
 
     const currentAccount = await AccountsRepository.transaction(idDebit, idCredit, value);
