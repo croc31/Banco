@@ -7,12 +7,12 @@ class AccountsRepository {
     return row;
   }
 
-  async create({ id }) {
+  async create({ id, isPoupanca }) {
     const [row] = await db.query(`
       INSERT INTO accounts(id)
-      VALUES($1)
+      VALUES($1,0,$2)
       RETURNING *
-    `, [id]);
+    `, [id,isPoupanca]);
 
     return row;
   }
