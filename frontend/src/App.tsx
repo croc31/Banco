@@ -21,13 +21,14 @@ import { Terminal } from "lucide-react"
 export function App() {
   const [result, setResult] = useState({});
   const [id, setId] = useState('');
+  const [isPoupanca, setIsPoupanca] = useState('');
   const [idDebit, setidDebit] = useState('');
   const [idCredit, setidCredit] = useState('');
   const [value, setValue] = useState('');
 
   const handleCreateAccount = useCallback(async () => {
     try {
-      const { data } = await api.post('accounts', { id });
+      const { data } = await api.post('accounts', { id, isPoupanca});
 
       setResult(data);
     } catch (error) {
@@ -92,6 +93,10 @@ export function App() {
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="id">Número da conta</Label>
                   <Input id="id" placeholder="12345" value={id} onChange={(event) => setId(event.target.value)} />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="isPoupanca">Esta conta é poupanca?</Label>
+                  <Form.Check id="isPoupanca"  value={isPoupanca} onChange={(event) => setIsPoupanca(event.target.value)} />
                 </div>
               </div>
             </CardContent>

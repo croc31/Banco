@@ -39,6 +39,22 @@ class AccountsRepository {
 
     return row;
   }
+
+  async renderJurosUmaConta(id, tax) {
+    const [oldValue] = await db.query('SELECT balance FROM accounts WHERE id = $1', [id]);
+    const [row] = await db.query('UPDATE accounts SET balance = $2 WHERE id = $1', [id, oldValue*((tax/100)+1)]);
+    
+  }
+  async renderJuros( tax) {
+    const [oldValueaccounts] = await db.query('SELECT id FROM accounts WHERE isPoupanca = true');
+    oldValueaccounts.forEach((id)=> renderJurosUmaConta(id, tax));
+
+    const [row] = await db.query('SELECT balance FROM accounts WHERE isPoupanca = true');
+    
+    console.log({ row });
+
+    return row;
+  }
 }
 
 module.exports = new AccountsRepository();

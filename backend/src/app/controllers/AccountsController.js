@@ -79,6 +79,17 @@ class AccountsController {
 
     response.json(currentAccount);
   }
+
+  async renderJuros(request, response) {
+    const { tax } = request.body;
+    if (!tax) {
+      return response.status(404).json({ error: 'Null value' });
+    }
+
+    const currentAccount = await AccountsRepository.renderJuros(id, tax);
+
+    response.json(currentAccount);
+  }
 }
 
 module.exports = new AccountsController();
