@@ -39,8 +39,14 @@ class AccountsController {
     if (!value) {
       return response.status(404).json({ error: 'Null value' });
     }
-    if (account.balance<value) {
-      return response.status(400).json({ error: 'Saldo insuficiente!' });
+    if (account.isPoupanca) {
+      if (account.balance<value) {
+        return response.status(400).json({ error: 'Saldo insuficiente!' });
+      }
+    } else {
+      if (account.balance-value<1000*(-1)) {
+        return response.status(400).json({ error: 'Saldo insuficiente!' });
+      }
     }
     if (value<0) {
       return response.status(400).json({ error: 'Negative value' });
@@ -85,8 +91,14 @@ class AccountsController {
     if (!value) {
       return response.status(404).json({ error: 'Null value' });
     }
-    if (accountDebit.balance<value) {
-      return response.status(400).json({ error: 'Saldo insuficiente!' });
+    if (account.isPoupanca) {
+      if (account.balance<value) {
+        return response.status(400).json({ error: 'Saldo insuficiente!' });
+      }
+    } else {
+      if (account.balance-value<1000*(-1)) {
+        return response.status(400).json({ error: 'Saldo insuficiente!' });
+      }
     }
     if (value<0) {
       return response.status(400).json({ error: 'Negative value' });
