@@ -16,13 +16,13 @@ class AccountsController {
   }
 
   async store(request, response) {
-    const { id,isPoupanca } = request.body;
+    const { id,isPoupanca, saldoInicial } = request.body;
 
     if (!id) {
       return response.status(400).json({ error: 'ID (account number) is required' });
     }
 
-    const account = await AccountsRepository.create({ id, isPoupanca });
+    const account = await AccountsRepository.create({ id, isPoupanca, saldoInicial});
 
     response.json(account);
   }

@@ -25,10 +25,11 @@ export function App() {
   const [idDebit, setidDebit] = useState('');
   const [idCredit, setidCredit] = useState('');
   const [value, setValue] = useState('');
+  const [saldoInicial, setSaldoInicial] = useState('');
 
   const handleCreateAccount = useCallback(async () => {
     try {
-      const { data } = await api.post('accounts', { id, isPoupanca});
+      const { data } = await api.post('accounts', { id, isPoupanca, value});
 
       setResult(data);
     } catch (error) {
@@ -93,6 +94,10 @@ export function App() {
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="id">Número da conta</Label>
                   <Input id="id" placeholder="12345" value={id} onChange={(event) => setId(event.target.value)} />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="id">saldo inicial</Label>
+                  <Input id="saldoInicial" placeholder="12345" value={saldoInicial} onChange={(event) => setSaldoInicial(event.target.value)} />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="isPoupanca">Esta conta é poupanca?</Label>
