@@ -16,13 +16,13 @@ class AccountsController {
   }
 
   async store(request, response) {
-    const { id } = request.body;
+    const { id,isPoupanca } = request.body;
 
     if (!id) {
       return response.status(400).json({ error: 'ID (account number) is required' });
     }
 
-    const account = await AccountsRepository.create({ id });
+    const account = await AccountsRepository.create({ id, isPoupanca });
 
     response.json(account);
   }
@@ -76,6 +76,17 @@ class AccountsController {
     }
 
     const currentAccount = await AccountsRepository.transaction(idDebit, idCredit, value);
+
+    response.json(currentAccount);
+  }
+
+  async renderJuros(request, response) {
+    const { tax } = request.body;
+    if (!tax) {
+      return response.status(404).json({ error: 'Null value' });
+    }
+
+    const currentAccount = await AccountsRepository.renderJuros(id, tax);
 
     response.json(currentAccount);
   }
