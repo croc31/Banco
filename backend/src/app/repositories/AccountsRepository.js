@@ -7,15 +7,16 @@ class AccountsRepository {
     return row;
   }
 
-  async create({ id, isPoupanca }) {
+  async create({ id, isPoupanca, saldoInicial}) {
     const [row] = await db.query(`
       INSERT INTO accounts(id)
-      VALUES($1,0,$2)
+      VALUES($1,$2,$3)
       RETURNING *
-    `, [id,isPoupanca]);
+    `, [id,saldoInicial, isPoupanca]);
 
     return row;
   }
+  
   async debit(id, value) {
     const [oldValue] = await db.query('select balance FROM accounts WHERE id = $1', [id]);
     const [row] = await db.query('UPDATE accounts SET balance = $2 WHERE id = $1', [id][value-oldValue[0]]);
